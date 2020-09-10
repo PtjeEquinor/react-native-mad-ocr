@@ -13,6 +13,12 @@ class LevenshteinDistanceStrategy: OcrStrategy {
         self.knownTags = knownTags
     }
     func extractTags(tags: [String]) -> [String] {
+        // If knownTags is empty
+        if knownTags.count == 0 {
+            return tags
+        }
+        
+        
         var result = [String]()
         for tag in tags {
             if knownTags.contains(tag) {
@@ -21,7 +27,7 @@ class LevenshteinDistanceStrategy: OcrStrategy {
                 var matches = [TagMatch]()
                 for knownTag in knownTags {
                     // let matchRate = simularity(source: tag, other: knownTag)
-                    let matchRate = tag.levenshteinDistanceScore(to: knownTag, ignoreCase: false, trimWhiteSpacesAndNewLines: true)
+                    let matchRate = tag.levenshteinDistanceScore(to: knownTag, ignoreCase: false, trimWhiteSpacesAndNewLines: false)
                     matches.append(TagMatch(tag: knownTag, matchRate: matchRate))
                 }
                 
@@ -30,7 +36,19 @@ class LevenshteinDistanceStrategy: OcrStrategy {
                 let bestMatch = sortedMatches.first
                 
                 if let bestMatch = bestMatch {
-                    result.append(bestMatch.tag)
+                    //
+                    if sortedMatches.count > 2 {
+                        if sortedMatches[0].matchRate != sortedMatches[1].matchRate {
+                            result.append(bestMatch.tag)
+                        } else {
+                            // no good match found, adding the tag from ocr.
+                            result.append(tag)
+                        }
+                    } else {
+                        result.append(bestMatch.tag)
+                    }
+                    
+                    
                 } else {
                     result.append(tag)
                 }

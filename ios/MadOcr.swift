@@ -13,10 +13,19 @@ class MadOcr: NSObject {
     
     
     // export
-    @objc(multiply:withResolver:withRejecter:)
-    func multiply(imageUri: String, resolve:@escaping RCTPromiseResolveBlock,reject:@escaping  RCTPromiseRejectBlock) -> Void {
+    @objc(textRecognition:withResolver:withRejecter:)
+    func textRecognition(imageUri: String, resolve:@escaping RCTPromiseResolveBlock,reject:@escaping  RCTPromiseRejectBlock) -> Void {
         
-        configureOCR(resolve: resolve, reject: reject)
+        configureOCRText(resolve: resolve, reject: reject)
+        processImage(imageUri, reject: reject)
+
+    }
+    
+    
+    @objc(tagRecognition:withResolver:withRejecter:)
+    func tagRecognition(imageUri: String, resolve:@escaping RCTPromiseResolveBlock,reject:@escaping  RCTPromiseRejectBlock) -> Void {
+        
+        configureOCRTag(resolve: resolve, reject: reject)
         processImage(imageUri, reject: reject)
 
     }
@@ -25,14 +34,7 @@ class MadOcr: NSObject {
     func setKnownTags(tags: [String], resolve:@escaping RCTPromiseResolveBlock,reject:@escaping  RCTPromiseRejectBlock) -> Void {
         
         self.knownTags = tags
-//        let g = LevenshteinDistanceStrategy(knownTags: ["test222", "test444"])
-//
-//        let r = g.extractTags(tags: ["test123"])
-//
-        resolve("jadda")
-//        configureOCR(resolve: resolve, reject: reject)
-//        processImage(imageUri, reject: reject)
-
+        resolve(nil)
     }
     
     private func processImage(_ imageUri: String, reject:@escaping  RCTPromiseRejectBlock) {
@@ -59,7 +61,7 @@ class MadOcr: NSObject {
     }
     
     
-    private func configureOCR(resolve: @escaping RCTPromiseResolveBlock,reject: @escaping RCTPromiseRejectBlock) {
+    private func configureOCRText(resolve: @escaping RCTPromiseResolveBlock,reject: @escaping RCTPromiseRejectBlock) {
         ocrRequest = VNRecognizeTextRequest { (request, error) in
             guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
             
@@ -70,11 +72,37 @@ class MadOcr: NSObject {
                 ocrText.append(topCandidate.string)
             }
             
-            let lev = LevenshteinDistanceStrategy(knownTags: self.knownTags)
+            DispatchQueue.main.async {
+                resolve(ocrText)
+            }
+        }
+        
+        ocrRequest.recognitionLevel = .accurate
+        ocrRequest.recognitionLanguages = ["en-US", "en-GB"]
+        ocrRequest.usesLanguageCorrection = true
+    }
+    
+    private func configureOCRTag(resolve: @escaping RCTPromiseResolveBlock,reject: @escaping RCTPromiseRejectBlock) {
+        ocrRequest = VNRecognizeTextRequest { (request, error) in
+            guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
             
+            var ocrText = [String]()
+            for observation in observations {
+                guard let topCandidate = observation.topCandidates(1).first else { return }
+                
+                ocrText.append(topCandidate.string)
+            }
             var result = ocrText
             
-            result = lev.extractTags(tags: result)
+            result = ShortTextStrategy().extractTags(tags: result)
+            result = RemoveDublicateStrategy().extractTags(tags: result)
+            result = ToUpperCommonOcrErrorStrategy().extractTags(tags: result)
+            result = RegexStrategy().extractTags(tags: result)
+            result = FilterCharUniqStrategy().extractTags(tags: result)
+            result = LevenshteinDistanceStrategy(knownTags: self.knownTags).extractTags(tags: result)
+            
+            result = RemoveDublicateStrategy().extractTags(tags: result)
+
             
             
             DispatchQueue.main.async {
@@ -83,7 +111,7 @@ class MadOcr: NSObject {
         }
         
         ocrRequest.recognitionLevel = .accurate
-        ocrRequest.recognitionLanguages = ["en-US", "en-GB"]
+        ocrRequest.recognitionLanguages = ["en-US", "en-GB", "no-NB"]
         ocrRequest.usesLanguageCorrection = true
     }
 

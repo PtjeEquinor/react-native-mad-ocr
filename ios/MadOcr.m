@@ -3,9 +3,13 @@
 
 @interface RCT_EXTERN_MODULE(MadOcr, NSObject)
 
-RCT_EXTERN_METHOD(multiply:(NSString) imageUri
+RCT_EXTERN_METHOD(textRecognition:(NSString) imageUri
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(tagRecognition:(NSString) imageUri
+                withResolver:(RCTPromiseResolveBlock)resolve
+                withRejecter:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(setKnownTags:(NSArray *) tags
                 withResolver:(RCTPromiseResolveBlock)resolve

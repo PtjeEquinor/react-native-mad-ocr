@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF99550C250ABA97008F2221 /* ShortTextStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF995507250ABA97008F2221 /* ShortTextStrategy.swift */; };
+		BF99550D250ABA97008F2221 /* ToUpperCommonOcrErrorStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF995508250ABA97008F2221 /* ToUpperCommonOcrErrorStrategy.swift */; };
+		BF99550E250ABA97008F2221 /* RegexStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF995509250ABA97008F2221 /* RegexStrategy.swift */; };
+		BF99550F250ABA97008F2221 /* FilterCharUniqStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99550A250ABA97008F2221 /* FilterCharUniqStrategy.swift */; };
+		BF995510250ABA97008F2221 /* RemoveDublicateStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99550B250ABA97008F2221 /* RemoveDublicateStrategy.swift */; };
 		BFCD0C52250974790088FB48 /* LevenshteinDistanceStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCD0C51250974790088FB48 /* LevenshteinDistanceStrategy.swift */; };
 		BFCD0C542509749B0088FB48 /* OcrStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCD0C532509749B0088FB48 /* OcrStrategy.swift */; };
 		F4FF95D7245B92E800C19C63 /* MadOcr.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* MadOcr.swift */; };
@@ -27,6 +32,11 @@
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libMadOcr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMadOcr.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5891CC2AC0600A0062D /* MadOcr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MadOcr.m; sourceTree = "<group>"; };
+		BF995507250ABA97008F2221 /* ShortTextStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortTextStrategy.swift; sourceTree = "<group>"; };
+		BF995508250ABA97008F2221 /* ToUpperCommonOcrErrorStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToUpperCommonOcrErrorStrategy.swift; sourceTree = "<group>"; };
+		BF995509250ABA97008F2221 /* RegexStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexStrategy.swift; sourceTree = "<group>"; };
+		BF99550A250ABA97008F2221 /* FilterCharUniqStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCharUniqStrategy.swift; sourceTree = "<group>"; };
+		BF99550B250ABA97008F2221 /* RemoveDublicateStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveDublicateStrategy.swift; sourceTree = "<group>"; };
 		BFCD0C51250974790088FB48 /* LevenshteinDistanceStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistanceStrategy.swift; sourceTree = "<group>"; };
 		BFCD0C532509749B0088FB48 /* OcrStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OcrStrategy.swift; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* MadOcr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MadOcr-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -55,6 +65,11 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				BF99550A250ABA97008F2221 /* FilterCharUniqStrategy.swift */,
+				BF995509250ABA97008F2221 /* RegexStrategy.swift */,
+				BF99550B250ABA97008F2221 /* RemoveDublicateStrategy.swift */,
+				BF995507250ABA97008F2221 /* ShortTextStrategy.swift */,
+				BF995508250ABA97008F2221 /* ToUpperCommonOcrErrorStrategy.swift */,
 				B3E7B5891CC2AC0600A0062D /* MadOcr.m */,
 				F4FF95D6245B92E800C19C63 /* MadOcr.swift */,
 				BFCD0C532509749B0088FB48 /* OcrStrategy.swift */,
@@ -121,8 +136,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF99550E250ABA97008F2221 /* RegexStrategy.swift in Sources */,
 				BFCD0C542509749B0088FB48 /* OcrStrategy.swift in Sources */,
+				BF99550F250ABA97008F2221 /* FilterCharUniqStrategy.swift in Sources */,
 				F4FF95D7245B92E800C19C63 /* MadOcr.swift in Sources */,
+				BF99550D250ABA97008F2221 /* ToUpperCommonOcrErrorStrategy.swift in Sources */,
+				BF99550C250ABA97008F2221 /* ShortTextStrategy.swift in Sources */,
+				BF995510250ABA97008F2221 /* RemoveDublicateStrategy.swift in Sources */,
 				BFCD0C52250974790088FB48 /* LevenshteinDistanceStrategy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
