@@ -14,6 +14,7 @@
 		BF995510250ABA97008F2221 /* RemoveDublicateStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99550B250ABA97008F2221 /* RemoveDublicateStrategy.swift */; };
 		BFCD0C52250974790088FB48 /* LevenshteinDistanceStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCD0C51250974790088FB48 /* LevenshteinDistanceStrategy.swift */; };
 		BFCD0C542509749B0088FB48 /* OcrStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCD0C532509749B0088FB48 /* OcrStrategy.swift */; };
+		BFD73C742510FEFC00A8CBDA /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD73C732510FEFC00A8CBDA /* Helper.m */; };
 		F4FF95D7245B92E800C19C63 /* MadOcr.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* MadOcr.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,8 @@
 		BF99550B250ABA97008F2221 /* RemoveDublicateStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoveDublicateStrategy.swift; sourceTree = "<group>"; };
 		BFCD0C51250974790088FB48 /* LevenshteinDistanceStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevenshteinDistanceStrategy.swift; sourceTree = "<group>"; };
 		BFCD0C532509749B0088FB48 /* OcrStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OcrStrategy.swift; sourceTree = "<group>"; };
+		BFD73C722510FEE000A8CBDA /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
+		BFD73C732510FEFC00A8CBDA /* Helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* MadOcr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MadOcr-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4FF95D6245B92E800C19C63 /* MadOcr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MadOcr.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,6 +68,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				BFD73C722510FEE000A8CBDA /* Helper.h */,
+				BFD73C732510FEFC00A8CBDA /* Helper.m */,
 				BF99550A250ABA97008F2221 /* FilterCharUniqStrategy.swift */,
 				BF995509250ABA97008F2221 /* RegexStrategy.swift */,
 				BF99550B250ABA97008F2221 /* RemoveDublicateStrategy.swift */,
@@ -143,6 +148,7 @@
 				BF99550D250ABA97008F2221 /* ToUpperCommonOcrErrorStrategy.swift in Sources */,
 				BF99550C250ABA97008F2221 /* ShortTextStrategy.swift in Sources */,
 				BF995510250ABA97008F2221 /* RemoveDublicateStrategy.swift in Sources */,
+				BFD73C742510FEFC00A8CBDA /* Helper.m in Sources */,
 				BFCD0C52250974790088FB48 /* LevenshteinDistanceStrategy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

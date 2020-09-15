@@ -1,4 +1,5 @@
 #import <React/RCTBridgeModule.h>
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 @interface RCT_EXTERN_MODULE(MadOcr, NSObject)
@@ -19,4 +20,12 @@ RCT_EXTERN_METHOD(setKnownTags:(NSArray *) tags
 {
     return NO;
 }
+
+
 @end
+
+
+
+
+
+

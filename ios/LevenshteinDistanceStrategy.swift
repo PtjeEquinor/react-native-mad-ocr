@@ -6,13 +6,18 @@
 //
 
 import Foundation
+import UIKit
 
 class LevenshteinDistanceStrategy: OcrStrategy {
     private var knownTags = [String]()
+    private let helper = Helper()
+    
     init(knownTags: [String]) {
         self.knownTags = knownTags
     }
     func extractTags(tags: [String]) -> [String] {
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
         // If knownTags is empty
         if knownTags.count == 0 {
             return tags
@@ -25,9 +30,9 @@ class LevenshteinDistanceStrategy: OcrStrategy {
                 result.append(tag)
             } else {
                 var matches = [TagMatch]()
+          
                 for knownTag in knownTags {
-                    // let matchRate = simularity(source: tag, other: knownTag)
-                    let matchRate = tag.levenshteinDistanceScore(to: knownTag, ignoreCase: false, trimWhiteSpacesAndNewLines: false)
+                    let matchRate = simularity(source: tag, other: knownTag)
                     matches.append(TagMatch(tag: knownTag, matchRate: matchRate))
                 }
                 
@@ -36,7 +41,6 @@ class LevenshteinDistanceStrategy: OcrStrategy {
                 let bestMatch = sortedMatches.first
                 
                 if let bestMatch = bestMatch {
-                    //
                     if sortedMatches.count > 2 {
                         if sortedMatches[0].matchRate != sortedMatches[1].matchRate {
                             result.append(bestMatch.tag)
@@ -56,18 +60,22 @@ class LevenshteinDistanceStrategy: OcrStrategy {
             
             
         }
+        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+          print("Time elapsed for LevenshteinDistanceStrategy: \(timeElapsed) s.")
+        
         return result
     }
     
     
     
     func simularity(source: String, other: String) -> Double {
-        let stepsToSame = other.levenshtein(other)
-        
-        return (1.0 - (Double(stepsToSame) / Double(max(source.count, other.count))));
+        // Using objective-c implementations because it's 3.5 x faster than swift (related to string comparing)
+        let stepsToSame = helper.computeLevenshteinDistance(from: source, to: other);
+        return 1.0 - (Double(stepsToSame) / Double(max(source.count, other.count)));
     }
     
 
+    
 }
 
 class TagMatch {
@@ -80,27 +88,13 @@ class TagMatch {
 
 }
 
-extension String {
-    subscript(index: Int) -> Character {
-        return self[self.index(self.startIndex, offsetBy: index)]
-    }
-}
 
 extension String {
     
-    func levenshteinDistanceScore(to string: String, ignoreCase: Bool = true, trimWhiteSpacesAndNewLines: Bool = true) -> Double {
+    func levenshteinDistanceScore(to string: String) -> Double {
 
-        var firstString = self
-        var secondString = string
-
-        if ignoreCase {
-            firstString = firstString.lowercased()
-            secondString = secondString.lowercased()
-        }
-        if trimWhiteSpacesAndNewLines {
-            firstString = firstString.trimmingCharacters(in: .whitespacesAndNewlines)
-            secondString = secondString.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
+        let firstString = self
+        let secondString = string
 
         let empty = [Int](repeating:0, count: secondString.count)
         var last = [Int](0...secondString.count)
@@ -123,43 +117,5 @@ extension String {
         return 0.0
     }
     
-    public func levenshtein(_ other: String) -> Int {
-        let sCount = self.count
-        let oCount = other.count
-
-        guard sCount != 0 else {
-            return oCount
-        }
-
-        guard oCount != 0 else {
-            return sCount
-        }
-
-        let line : [Int]  = Array(repeating: 0, count: oCount + 1)
-        var mat : [[Int]] = Array(repeating: line, count: sCount + 1)
-
-        for i in 0...sCount {
-            mat[i][0] = i
-        }
-
-        for j in 0...oCount {
-            mat[0][j] = j
-        }
-
-        for j in 1...oCount {
-            for i in 1...sCount {
-                if self[i - 1] == other[j - 1] {
-                    mat[i][j] = mat[i - 1][j - 1]       // no operation
-                }
-                else {
-                    let del = mat[i - 1][j] + 1         // deletion
-                    let ins = mat[i][j - 1] + 1         // insertion
-                    let sub = mat[i - 1][j - 1] + 1     // substitution
-                    mat[i][j] = min(min(del, ins), sub)
-                }
-            }
-        }
-
-        return mat[sCount][oCount]
-    }
 }
+
